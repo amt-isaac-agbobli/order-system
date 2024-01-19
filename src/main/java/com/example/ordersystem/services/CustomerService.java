@@ -27,6 +27,18 @@ public class CustomerService {
     }
 
     public List<Customer> getAllCustomers(){
-        return customerRepository.findAll();
+        List<Customer> customers = customerRepository.findAll();
+        if (customers.isEmpty()){
+            throw new HttpServerErrorException(HttpStatus.NOT_FOUND, "No customers found");
+        }
+        return customers;
+    }
+
+    public Customer getCustomerById(Long id){
+        Customer customer = customerRepository.findById(id).orElse(null);
+        if (customer == null){
+            throw new HttpServerErrorException(HttpStatus.NOT_FOUND, "Customer not found");
+        }
+        return customer;
     }
 }

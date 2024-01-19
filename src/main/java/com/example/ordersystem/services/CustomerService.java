@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpServerErrorException;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class CustomerService {
@@ -47,11 +48,23 @@ public class CustomerService {
         if (customerToUpdate == null){
             throw new HttpServerErrorException(HttpStatus.NOT_FOUND, "Customer not found");
         }
-        Customer.builder()
-                .firstName(customer.getFirstName())
-                .lastName(customer.getLastName())
-                .email(customer.getEmail())
-                .build();
-        return customerRepository.save(customerToUpdate);
+        if (Objects.equals(customerToUpdate.getEmail(), customer.getEmail())){
+            throw new HttpServerErrorException(HttpStatus.BAD_REQUEST, "Email already exists");
+        }
+        Customer updatedCustomer = customerRepository.updateCustomerById(id,
+                                                                         customer.getFirstName(),
+                                                                         customer.getLastName(),
+                                                                         customer.getEmail(),
+                                                                         customer.getAddress());
+        System.out.println(customerToUpdate);
+        return updatedCustomer;
+    }
+
+    public void deleteCustomer(Long id){
+        Customer customer = customerRepository.findById(id).orElse(null);
+        if (customer == null){
+            throw new HttpServerErrorException(HttpStatus.NOT_FOUND, "Customer not found");
+        }
+        customerRepository.deleteById(id);
     }
 }

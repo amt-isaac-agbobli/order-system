@@ -31,4 +31,14 @@ public class CustomerController {
     public Customer getCustomerById(@PathVariable Long id){
         return customerService.getCustomerById(id);
     }
+
+    @PutMapping("/{id}")
+    public Customer updateCustomerDetails(@PathVariable Long id, @RequestBody Customer customer){
+        return customerService.updateCustomerDetails(id, customer);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCustomer(@PathVariable Long id){
+        customerService.deleteCustomer(id);
+    }
 }

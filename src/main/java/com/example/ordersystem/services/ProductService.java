@@ -19,4 +19,12 @@ public class ProductService {
     public List<Product> getProducts() {
         return productRepository.findAll();
     }
+
+    public Product getProductById(Long id) {
+        return productRepository.findById(id).orElse(null);
+    }
+
+    public Product addProduct(Product product) {
+        return productRepository.save(product);
+    }
 }

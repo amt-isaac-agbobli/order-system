@@ -41,4 +41,17 @@ public class CustomerService {
         }
         return customer;
     }
+
+    public Customer updateCustomerDetails(Long id, Customer customer){
+        Customer customerToUpdate = customerRepository.findById(id).orElse(null);
+        if (customerToUpdate == null){
+            throw new HttpServerErrorException(HttpStatus.NOT_FOUND, "Customer not found");
+        }
+        Customer.builder()
+                .firstName(customer.getFirstName())
+                .lastName(customer.getLastName())
+                .email(customer.getEmail())
+                .build();
+        return customerRepository.save(customerToUpdate);
+    }
 }

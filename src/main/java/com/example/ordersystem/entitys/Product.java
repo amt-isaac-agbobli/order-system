@@ -1,14 +1,14 @@
 package com.example.ordersystem.entitys;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
+@Data
 @Table(name = "products")
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Builder
 public class Product {
     @Id

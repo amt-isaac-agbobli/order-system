@@ -1,11 +1,11 @@
 package com.example.ordersystem.entitys;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
+@Data
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -25,8 +25,8 @@ public class Customer {
 
     @Column(nullable = false)
     private String lastName;
-    @Column(unique = true, nullable = false)
 
+    @Column(unique = true, nullable = false)
     private String email;
 
     private String address;

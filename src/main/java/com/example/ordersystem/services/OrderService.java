@@ -53,4 +53,12 @@ public class OrderService {
        return orderRepository.save(newOrder);
     }
 
+    public Order getOrderById(Long id) {
+       Order order = orderRepository.findById(id).orElse(null);
+         if(order == null){
+              throw new CustomHttpException("Order with id " + id + " not found", HttpStatus.NOT_FOUND);
+         }
+            return order;
+    }
+
 }

@@ -21,4 +21,8 @@ public class OrderController {
                                              @PathVariable() Long customerId){
         return ResponseEntity.status(201).body(orderService.craeteOrder(order, customerId));
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<Order> getOrderById(@PathVariable() Long id){
+        return ResponseEntity.status(200).body(orderService.getOrderById(id));
+    }
 }

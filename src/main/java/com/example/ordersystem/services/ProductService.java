@@ -78,4 +78,12 @@ public class ProductService {
                 .build();
         productRepository.save(updatedProduct);
     }
+
+    public  List<Product> searchProductByProductStatus(boolean productStatus){
+        List<Product> products = productRepository.findProductByProductStatus(productStatus);
+        if (products.isEmpty()){
+            throw new CustomHttpException("Product not found", HttpStatus.NOT_FOUND);
+        }
+        return products;
+    }
 }

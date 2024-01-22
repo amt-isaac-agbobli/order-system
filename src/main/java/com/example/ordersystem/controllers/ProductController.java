@@ -49,4 +49,8 @@ public class ProductController {
         productService.updateProduct(id, product);
         return ResponseEntity.status(200).body("Product is updated Successfully");
     }
+    @GetMapping("/search")
+    public ResponseEntity<List<Product>> searchProductByStatus(@RequestParam Boolean productStatus){
+        return ResponseEntity.ok().body(productService.searchProductByProductStatus(productStatus));
+    }
 }

@@ -26,4 +26,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                               @Param("productStatus") boolean productStatus);
 
     List<Product> findProductByProductStatus(boolean productStatus);
+
+    List<Product> findProductByProductCategory(String productCategory);
 }

@@ -38,4 +38,12 @@ public class ProductService {
            productRepository.save(newProduct);
         return newProduct;
     }
+
+    public void deleteProduct(Long productId){
+        Product productExit = productRepository.findById(productId).orElse(null);
+        if(productExit == null){
+            throw  new RuntimeException("Product does not exit");
+        }
+        productRepository.deleteById(productId);
+    }
 }

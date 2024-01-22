@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("api/v1/products")
 public class ProductController {
@@ -33,5 +34,11 @@ public class ProductController {
     @PostMapping("/add")
     public ResponseEntity<Product> addProduct(@Valid @RequestBody AddProductDto product) {
         return ResponseEntity.status(201).body(productService.addProduct(product));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteProduct(@PathVariable()Long id){
+        productService.deleteProduct(id);
+        return ResponseEntity.status(200).body("Product is deleted Successfully");
     }
 }

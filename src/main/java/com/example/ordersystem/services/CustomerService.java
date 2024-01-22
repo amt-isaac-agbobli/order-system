@@ -1,6 +1,7 @@
 package com.example.ordersystem.services;
 
 import com.example.ordersystem.Repositories.CustomerRepository;
+import com.example.ordersystem.dtos.AddCustomerDto;
 import com.example.ordersystem.entitys.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,13 +19,20 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
-    public Customer AddCustomer(Customer customer){
+    public Customer AddCustomer(AddCustomerDto customer){
         Customer customerExists = customerRepository.findCustomerByEmail(customer.getEmail());
         if(customerExists != null){
             //throw new IllegalStateException("Customer already exists");
             throw new HttpServerErrorException(HttpStatus.BAD_REQUEST, "Customer already exists");
         }
-        return customerRepository.save(customer);
+        Customer newCustomer = Customer
+                .builder()
+                .firstName(customer.getFirstName())
+                .lastName(customer.getLastName())
+                .email(customer.getEmail())
+                .address(customer.getAddress())
+                .build();
+        return customerRepository.save(newCustomer);
     }
 
     public List<Customer> getAllCustomers(){

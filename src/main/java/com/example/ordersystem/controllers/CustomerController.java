@@ -1,8 +1,11 @@
 package com.example.ordersystem.controllers;
 
+import com.example.ordersystem.dtos.AddCustomerDto;
 import com.example.ordersystem.entitys.Customer;
 import com.example.ordersystem.services.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +21,8 @@ public class CustomerController {
     }
 
     @PostMapping("/add")
-    public Customer addCustomer(@RequestBody Customer customer){
-        return customerService.AddCustomer(customer);
+    public ResponseEntity<Customer> addCustomer(@Valid  @RequestBody AddCustomerDto customer){
+        return ResponseEntity.status(201).body(customerService.AddCustomer(customer));
     }
 
     @GetMapping

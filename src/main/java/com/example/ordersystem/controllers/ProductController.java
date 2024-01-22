@@ -1,6 +1,7 @@
 package com.example.ordersystem.controllers;
 
 import com.example.ordersystem.dtos.AddProductDto;
+import com.example.ordersystem.dtos.UpdateProductDetailsDto;
 import com.example.ordersystem.entitys.Product;
 import com.example.ordersystem.services.ProductService;
 import jakarta.validation.Valid;
@@ -40,5 +41,12 @@ public class ProductController {
     public ResponseEntity<Object> deleteProduct(@PathVariable()Long id){
         productService.deleteProduct(id);
         return ResponseEntity.status(200).body("Product is deleted Successfully");
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateProduct(@PathVariable()Long id,
+                                                @Valid @RequestBody UpdateProductDetailsDto product){
+        productService.updateProduct(id, product);
+        return ResponseEntity.status(200).body("Product is updated Successfully");
     }
 }

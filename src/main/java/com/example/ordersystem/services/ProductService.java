@@ -2,6 +2,7 @@ package com.example.ordersystem.services;
 
 import com.example.ordersystem.Repositories.ProductRepository;
 import com.example.ordersystem.dtos.AddProductDto;
+import com.example.ordersystem.dtos.UpdateProductDetailsDto;
 import com.example.ordersystem.entitys.Product;
 import com.example.ordersystem.exception.CustomHttpException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,5 +59,23 @@ public class ProductService {
             throw  new CustomHttpException("Product with" + productId + " not found", HttpStatus.NOT_FOUND);
         }
         productRepository.deleteById(productId);
+    }
+
+    public void updateProduct(Long productId, UpdateProductDetailsDto product){
+        Product productToUpdate = productRepository.findById(productId).orElse(null);
+        if(productToUpdate == null){
+            throw  new CustomHttpException("Product with" + productId + " not found", HttpStatus.NOT_FOUND);
+        }
+        Product updatedProduct = Product
+                .builder()
+                .productId(productToUpdate.getProductId())
+                .productName(product.getProductName())
+                .productCategory(product.getProductCategory())
+                .productDescription(product.getProductDescription())
+                .productQuantity(product.getProductQuantity())
+                .productPrice(product.getProductPrice())
+                .productStatus(product.isProductStatus())
+                .build();
+        productRepository.save(updatedProduct);
     }
 }

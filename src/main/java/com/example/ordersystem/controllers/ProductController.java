@@ -51,6 +51,10 @@ public class ProductController {
     }
     @GetMapping("/search")
     public ResponseEntity<List<Product>> searchProductByStatus(@RequestParam Boolean productStatus){
-        return ResponseEntity.ok().body(productService.searchProductByProductStatus(productStatus));
+        return ResponseEntity.status(200).body(productService.searchProductByProductStatus(productStatus));
+    }
+    @GetMapping("/search/{productName}")
+    public ResponseEntity<List<Product>> searchProductByName(@PathVariable()String productName){
+        return ResponseEntity.status(200).body(productService.searchProductByProductName(productName));
     }
 }

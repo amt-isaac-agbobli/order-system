@@ -86,4 +86,20 @@ public class ProductService {
         }
         return products;
     }
+
+    public  List<Product> searchProductByProductCategory(String productCategory){
+        List<Product> products = productRepository.findProductByProductCategory(productCategory);
+        if (products.isEmpty()){
+            throw new CustomHttpException("Product not found", HttpStatus.NOT_FOUND);
+        }
+        return products;
+    }
+
+    public List<Product> searchProductByProductName(String productName) {
+        List<Product> products = productRepository.findProductByProductNameContaining(productName);
+        if (products.isEmpty()){
+            throw new CustomHttpException("Product not found", HttpStatus.NOT_FOUND);
+        }
+        return products;
+    }
 }

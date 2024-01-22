@@ -57,4 +57,9 @@ public class ProductController {
     public ResponseEntity<List<Product>> searchProductByName(@PathVariable()String productName){
         return ResponseEntity.status(200).body(productService.searchProductByProductName(productName));
     }
+
+    @GetMapping("/search/category/{productCategory}")
+    public ResponseEntity<List<Product>> searchProductByCategory(@PathVariable()String productCategory){
+        return ResponseEntity.status(200).body(productService.searchProductByProductCategory(productCategory));
+    }
 }

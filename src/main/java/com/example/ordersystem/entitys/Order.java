@@ -17,6 +17,7 @@ public class Order {
             sequenceName = "order_sequence",
             allocationSize = 1
     )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_sequence")
     private Long orderId;
 
     @Column(nullable = false)

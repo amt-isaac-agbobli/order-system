@@ -1,20 +1,19 @@
 package com.example.ordersystem.exception;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-public class HttpException extends RuntimeException {
+@Getter
+public class CustomHttpException extends RuntimeException {
     private final HttpStatus httpStatus;
-    public HttpException(String message, HttpStatus httpStatus) {
+    public CustomHttpException(String message, HttpStatus httpStatus) {
         super(message);
         this.httpStatus = httpStatus;
     }
 
-    public HttpException(String message, Throwable cause, HttpStatus httpStatus) {
+    public CustomHttpException(String message, Throwable cause, HttpStatus httpStatus) {
         super(message, cause);
         this.httpStatus = httpStatus;
-    }
-    public HttpStatus getHttpStatus() {
-        return httpStatus;
     }
 
 }

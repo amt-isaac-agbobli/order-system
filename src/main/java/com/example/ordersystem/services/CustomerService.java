@@ -3,6 +3,7 @@ package com.example.ordersystem.services;
 import com.example.ordersystem.Repositories.CustomerRepository;
 import com.example.ordersystem.dtos.AddCustomerDto;
 import com.example.ordersystem.entitys.Customer;
+import com.example.ordersystem.exception.CustomHttpException;
 import com.example.ordersystem.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ public class CustomerService {
         Customer customerExists = customerRepository.findCustomerByEmail(customer.getEmail());
         if(customerExists != null){
             //throw new IllegalStateException("Customer already exists");
-            throw new HttpServerErrorException(HttpStatus.BAD_REQUEST, "Customer already exists");
+            throw new CustomHttpException("Customer already exists", HttpStatus.CONFLICT);
         }
         Customer newCustomer = Customer
                 .builder()
@@ -58,7 +59,7 @@ public class CustomerService {
             throw new NotFoundException("Customer not found");
         }
         if (Objects.equals(customerToUpdate.getEmail(), customer.getEmail())){
-            throw new HttpServerErrorException(HttpStatus.BAD_REQUEST, "Email already exists");
+            throw new CustomHttpException("Customer already exists", HttpStatus.CONFLICT);
         }
         Customer updatedCustomer = customerRepository.updateCustomerById(id,
                                                                          customer.getFirstName(),

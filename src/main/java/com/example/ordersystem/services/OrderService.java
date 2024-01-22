@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class OrderService {
     private final OrderRepository orderRepository;
@@ -59,6 +61,30 @@ public class OrderService {
               throw new CustomHttpException("Order with id " + id + " not found", HttpStatus.NOT_FOUND);
          }
             return order;
+    }
+    public void deleteOrder(Long id){
+        Order order = orderRepository.findById(id).orElse(null);
+        if(order == null){
+            throw new CustomHttpException("Order with id " + id + " not found", HttpStatus.NOT_FOUND);
+        }
+        orderRepository.deleteById(id);
+    }
+
+    public List<Order> getOrdersByCustomerId(Long customerId){
+        List<Order> orders = orderRepository.findByCustomerId(customerId);
+        if(orders.isEmpty()){
+            throw new CustomHttpException("Orders for customer with id " + customerId + " not found", HttpStatus.NOT_FOUND);
+        }
+        return orders;
+    }
+
+    public Order updateOrderStatus(Long id, String status){
+        Order order = orderRepository.findById(id).orElse(null);
+        if(order == null){
+            throw new CustomHttpException("Order with id " + id + " not found", HttpStatus.NOT_FOUND);
+        }
+        order.setOrderStatus(status);
+        return orderRepository.save(order);
     }
 
 }

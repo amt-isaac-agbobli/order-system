@@ -48,4 +48,5 @@ public class CustomerController {
         customerService.deleteCustomer(id);
         return ResponseEntity.status(200).body("Customer deleted successfully");
     }
+
 }

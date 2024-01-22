@@ -25,4 +25,21 @@ public class OrderController {
     public ResponseEntity<Order> getOrderById(@PathVariable() Long id){
         return ResponseEntity.status(200).body(orderService.getOrderById(id));
     }
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<String> deleteOrder(@PathVariable() Long id){
+        orderService.deleteOrder(id);
+        return ResponseEntity.status(200).body("Order with id " + id + " deleted successfully");
+    }
+    @GetMapping("/customer/{customerId}")
+    public ResponseEntity<Object> getOrderByCustomerId(@PathVariable() Long customerId){
+        return ResponseEntity.status(200).body(orderService.getOrdersByCustomerId(customerId));
+    }
+    @PutMapping("/update/status/{id}")
+    public ResponseEntity<Object> updateOrderStatus(@PathVariable() Long id, @RequestParam() String status){
+        Order order = orderService.updateOrderStatus(id, status);
+        if(order == null){
+            return ResponseEntity.status(500).body("Order with id " + id + " is still pending");
+        }
+        return ResponseEntity.status(200).body("Order status updated successfully");
+    }
 }

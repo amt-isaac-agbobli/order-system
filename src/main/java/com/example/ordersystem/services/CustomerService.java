@@ -3,6 +3,7 @@ package com.example.ordersystem.services;
 import com.example.ordersystem.Repositories.CustomerRepository;
 import com.example.ordersystem.dtos.AddCustomerDto;
 import com.example.ordersystem.entitys.Customer;
+import com.example.ordersystem.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,7 @@ public class CustomerService {
     public List<Customer> getAllCustomers(){
         List<Customer> customers = customerRepository.findAll();
         if (customers.isEmpty()){
-            throw new HttpServerErrorException(HttpStatus.NOT_FOUND, "No customers found");
+            throw new NotFoundException("Customer not found");
         }
         return customers;
     }
@@ -46,7 +47,7 @@ public class CustomerService {
     public Customer getCustomerById(Long id){
         Customer customer = customerRepository.findById(id).orElse(null);
         if (customer == null){
-            throw new HttpServerErrorException(HttpStatus.NOT_FOUND, "Customer not found");
+            throw new NotFoundException("Customer not found");
         }
         return customer;
     }
@@ -54,7 +55,7 @@ public class CustomerService {
     public Customer updateCustomerDetails(Long id, Customer customer){
         Customer customerToUpdate = customerRepository.findById(id).orElse(null);
         if (customerToUpdate == null){
-            throw new HttpServerErrorException(HttpStatus.NOT_FOUND, "Customer not found");
+            throw new NotFoundException("Customer not found");
         }
         if (Objects.equals(customerToUpdate.getEmail(), customer.getEmail())){
             throw new HttpServerErrorException(HttpStatus.BAD_REQUEST, "Email already exists");
@@ -71,7 +72,7 @@ public class CustomerService {
     public void deleteCustomer(Long id){
         Customer customer = customerRepository.findById(id).orElse(null);
         if (customer == null){
-            throw new HttpServerErrorException(HttpStatus.NOT_FOUND, "Customer not found");
+            throw new NotFoundException("Customer not found");
         }
         customerRepository.deleteById(id);
     }

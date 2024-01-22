@@ -1,16 +1,21 @@
 package com.example.ordersystem.exception;
 
-public class ExceptionHandler {
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+@ControllerAdvice // This annotation allows us to handle exceptions across the whole application
+public class GlobalExceptionHandler {
     @ExceptionHandler(value = {NotFoundException.class})
     public ResponseEntity<Object> handleCloudVendorNotFoundException
-            (CloudVendorNotFoundException cloudVendorNotFoundException)
+            (NotFoundException notFoundException)
     {
-        CloudVendorException cloudVendorException = new CloudVendorException(
-                cloudVendorNotFoundException.getMessage(),
-                cloudVendorNotFoundException.getCause(),
+        Exception Exception = new Exception(
+                notFoundException.getMessage(),
+                notFoundException.getCause(),
                 HttpStatus.NOT_FOUND
         );
 
-        return new ResponseEntity<>(cloudVendorException, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(Exception, HttpStatus.NOT_FOUND);
     }
 }

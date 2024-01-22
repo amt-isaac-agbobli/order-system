@@ -2,6 +2,7 @@ package com.example.ordersystem.services;
 
 import com.example.ordersystem.Repositories.CustomerRepository;
 import com.example.ordersystem.dtos.AddCustomerDto;
+import com.example.ordersystem.dtos.UpdateCustomerDetailsDto;
 import com.example.ordersystem.entitys.Customer;
 import com.example.ordersystem.exception.CustomHttpException;
 import com.example.ordersystem.exception.NotFoundException;
@@ -53,21 +54,16 @@ public class CustomerService {
         return customer;
     }
 
-    public Customer updateCustomerDetails(Long id, Customer customer){
+    public void updateCustomerDetails(Long id, UpdateCustomerDetailsDto customer){
         Customer customerToUpdate = customerRepository.findById(id).orElse(null);
         if (customerToUpdate == null){
             throw new NotFoundException("Customer not found");
         }
-        if (Objects.equals(customerToUpdate.getEmail(), customer.getEmail())){
-            throw new CustomHttpException("Customer already exists", HttpStatus.CONFLICT);
-        }
-        Customer updatedCustomer = customerRepository.updateCustomerById(id,
+
+         customerRepository.updateCustomerById(customerToUpdate.getCustomerId(),
                                                                          customer.getFirstName(),
                                                                          customer.getLastName(),
-                                                                         customer.getEmail(),
                                                                          customer.getAddress());
-        System.out.println(customerToUpdate);
-        return updatedCustomer;
     }
 
     public void deleteCustomer(Long id){

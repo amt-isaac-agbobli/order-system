@@ -1,6 +1,7 @@
 package com.example.ordersystem.controllers;
 
 import com.example.ordersystem.dtos.AddCustomerDto;
+import com.example.ordersystem.dtos.UpdateCustomerDetailsDto;
 import com.example.ordersystem.entitys.Customer;
 import com.example.ordersystem.services.CustomerService;
 import jakarta.validation.Valid;
@@ -36,8 +37,10 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Customer> updateCustomerDetails(@PathVariable Long id, @RequestBody Customer customer){
-        return ResponseEntity.status(200).body(customerService.updateCustomerDetails(id,customer));
+    public ResponseEntity<Object> updateCustomerDetails(@PathVariable Long id,
+                                                          @RequestBody UpdateCustomerDetailsDto customer){
+        customerService.updateCustomerDetails(id, customer);
+        return ResponseEntity.status(200).body("Customer updated successfully");
     }
 
     @DeleteMapping("/{id}")

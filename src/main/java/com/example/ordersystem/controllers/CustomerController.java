@@ -31,17 +31,18 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    public Customer getCustomerById(@PathVariable Long id){
-        return customerService.getCustomerById(id);
+    public ResponseEntity<Customer> getCustomerById(@PathVariable Long id){
+        return ResponseEntity.status(200).body(customerService.getCustomerById(id));
     }
 
     @PutMapping("/{id}")
-    public Customer updateCustomerDetails(@PathVariable Long id, @RequestBody Customer customer){
-        return customerService.updateCustomerDetails(id, customer);
+    public ResponseEntity<Customer> updateCustomerDetails(@PathVariable Long id, @RequestBody Customer customer){
+        return ResponseEntity.status(200).body(customerService.updateCustomerDetails(id,customer));
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCustomer(@PathVariable Long id){
+    public ResponseEntity<Object> deleteCustomer(@PathVariable Long id){
         customerService.deleteCustomer(id);
+        return ResponseEntity.status(200).body("Customer deleted successfully");
     }
 }

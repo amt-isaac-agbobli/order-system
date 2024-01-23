@@ -19,4 +19,9 @@ public class ShipmentController {
         return ResponseEntity.status(201).body(shipmentService.addOrderToShipment(orderId, shipmentStatus));
     }
 
+    @PostMapping("/update/{shipmentId}")
+    public ResponseEntity<Object> updateShipmentStatus(@PathVariable long shipmentId, @RequestParam String shipmentStatus){
+        return ResponseEntity.status(200).body(shipmentService.updateShipmentStatus(shipmentId, shipmentStatus));
+    }
+
 }

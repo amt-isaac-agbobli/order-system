@@ -39,6 +39,14 @@ public class ShipmentService {
         orderRepository.updateByOrderStatus("Shipped", orderId);
 
         return Map.entry("message", "Order added to shipment");
+    }
 
+    public Object updateShipmentStatus(Long shipmentId, String shipmentStatus){
+        Shipment shipment = shipmentRepository.findById(shipmentId).orElse(null);
+        if (shipment == null){
+            throw new CustomHttpException("Shipment not found", HttpStatus.NOT_FOUND);
+        }
+        shipmentRepository.updateShipmenStatus(shipmentStatus, shipmentId);
+        return Map.entry("message", "Shipment status updated successfully");
     }
 }

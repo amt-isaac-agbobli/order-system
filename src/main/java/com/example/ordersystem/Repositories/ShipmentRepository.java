@@ -1,20 +1,16 @@
 package com.example.ordersystem.Repositories;
 
-import com.example.ordersystem.entitys.Order;
+import com.example.ordersystem.entitys.Shipment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 @Repository
-public interface OrderRepository extends JpaRepository<Order, Long> {
-
-    List<Order> findByCustomerId(Long customerId);
-    @Transactional
+public interface ShipmentRepository extends JpaRepository<Shipment, Long> {
     @Modifying
-    @Query("UPDATE Order o SET o.orderStatus = ?1 WHERE o.id = ?2")
-    void updateByOrderStatus(String orderStatus, Long id);
-
+    @Transactional
+    @Query("UPDATE Shipment s SET s.shipmentStatus = ?1 WHERE s.id = ?2")
+    void updateShipmenStatus(String shipmentStatus, Long id);
 }
